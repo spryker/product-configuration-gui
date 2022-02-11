@@ -8,29 +8,29 @@
 namespace Spryker\Zed\ProductConfigurationGui\Communication\Plugin\ProductManagement;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataExpanderPluginInterface;
+use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataBulkExpanderPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\ProductConfigurationGui\Communication\Plugin\ProductManagement\ProductConfigurationProductTableDataBulkExpanderPlugin} instead
  * @method \Spryker\Zed\ProductConfigurationGui\Communication\ProductConfigurationGuiCommunicationFactory getFactory()
  */
-class ProductConfigurationTableDataExpanderPlugin extends AbstractPlugin implements ProductTableDataExpanderPluginInterface
+class ProductConfigurationProductTableDataBulkExpanderPlugin extends AbstractPlugin implements ProductTableDataBulkExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Checks is product abstract has at least one product concrete with product configuration.
+     * - Checks if product abstract has at least one product concrete with product configuration.
      * - Expands product items with configurable product type if has or do nothing otherwise.
      *
      * @api
      *
-     * @param array $item
+     * @param array<array<string, mixed>> $items
+     * @param array<array<string, mixed>> $productData
      *
-     * @return array
+     * @return array<array<string, mixed>>
      */
-    public function expand(array $item): array
+    public function expandTableData(array $items, array $productData): array
     {
         return $this->getFactory()
             ->createProductConfigurationTableDataExpander()
-            ->expandProductItemWithProductConfigurationType($item);
+            ->expandProductItemsWithProductData($items, $productData);
     }
 }
